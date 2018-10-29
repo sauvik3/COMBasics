@@ -1,0 +1,22 @@
+import "unknwn.idl";
+
+[
+	uuid(54C3CF40-2146-44FC-B973-B41C4BA83058),
+	helpstring("Contains only interface for basic arithmetic operations.")
+]
+library MyMathLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		object,
+		uuid(3A8934D2-E05E-4BAE-A95F-74ACEC8EDF43),
+		helpstring("ICalculation : Interface supporting basic arithmetic operations.")
+	]
+	interface ICalculation : IUnknown
+	{
+		HRESULT		Addition([in] int op1, [in] int op2, [out] int *result);
+		HRESULT		Subtraction([in] int op1, [in] int op2, [out] int *result);
+	};
+}
