@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalcCOMObject", "CalcCOMObject\CalcCOMObject.vcxproj", "{13ACA2C0-2573-4DCF-BA60-521ED1B0D325}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalcCOMObjectTest", "CalcCOMObjectTest\CalcCOMObjectTest.vcxproj", "{B658F29F-B6BA-4FAD-984D-11574F52A270}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13ACA2C0-2573-4DCF-BA60-521ED1B0D325} = {13ACA2C0-2573-4DCF-BA60-521ED1B0D325}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

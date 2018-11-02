@@ -11,6 +11,7 @@ HRESULT CCalculationObj::QueryInterface(REFIID riid, LPVOID *ppObj) {
 		return E_NOINTERFACE;
 	}
 	reinterpret_cast<IUnknown*>(*ppObj)->AddRef();
+
 	return S_OK;
 }
 
@@ -30,10 +31,12 @@ ULONG CCalculationObj::Release()
 
 HRESULT CCalculationObj::Addition(int op1, int op2, int * result)
 {
-	try {
+	try
+	{
 		*result = op1 + op2;
 	}
-	catch (...) {
+	catch (...)
+	{
 		return E_FAIL;
 	}
 	return S_OK;
@@ -41,10 +44,12 @@ HRESULT CCalculationObj::Addition(int op1, int op2, int * result)
 
 HRESULT CCalculationObj::Subtraction(int op1, int op2, int * result)
 {
-	try {
+	try
+	{
 		*result = op1 - op2;
 	}
-	catch (...) {
+	catch (...)
+	{
 		return E_FAIL;
 	}
 	return S_OK;
