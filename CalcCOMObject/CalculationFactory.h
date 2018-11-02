@@ -11,13 +11,13 @@ public:
 	~CCalculationFactory();
 
 	//interface IUnknown methods 
-	HRESULT __stdcall QueryInterface(REFIID riid, void **ppObj);
-	ULONG   __stdcall AddRef();
-	ULONG   __stdcall Release();
+	virtual HRESULT __stdcall QueryInterface(REFIID riid, LPVOID *ppObj);
+	virtual ULONG   __stdcall AddRef();
+	virtual ULONG   __stdcall Release();
 
 	//interface IClassFactory methods 
-	HRESULT __stdcall CreateInstance(IUnknown* pUnknownOuter, const IID& iid, void** ppv);
-	HRESULT __stdcall LockServer(BOOL bLock);
+	virtual HRESULT __stdcall CreateInstance(IUnknown* pUnknownOuter, const IID& iid, LPVOID *ppv);
+	virtual HRESULT __stdcall LockServer(BOOL bLock);
 
 private:
 	long m_nRefCount;
