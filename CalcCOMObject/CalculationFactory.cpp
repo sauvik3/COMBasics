@@ -1,49 +1,44 @@
 #include "CalculationFactory.h"
 #include "CalculationObj.h"
 
-CCalculationFactory::CCalculationFactory()
-{
-	m_nRefCount = 0;
-	InterlockedIncrement(&g_nComObjsInUse);
-}
+CCalculationFactory::CCalculationFactory() : m_nRefCount(1)
+{ }
 
 CCalculationFactory::~CCalculationFactory()
 {
-	InterlockedDecrement(&g_nComObjsInUse);
+	::InterlockedDecrement(&g_nComObjsInUse);
 }
 
-HRESULT CCalculationFactory::QueryInterface(REFIID riid, void ** ppObj)
+HRESULT CCalculationFactory::QueryInterface(REFIID riid, LPVOID *ppObj)
 {
-	*ppObj = NULL;
-	if (riid == IID_IUnknown) {
-		*ppObj = static_cast<void*>(this);
-		AddRef();
-		return S_OK;
+	if ((riid == IID_IUnknown) || (riid == IID_IClassFactory)) {
+		*ppObj = static_cast<IClassFactory *>(this);
 	}
-	if (riid == IID_IClassFactory) {
-		*ppObj = static_cast<void*>(this);
-		AddRef();
-		return S_OK;
-	}
-	return E_NOINTERFACE;
+    else {
+        *ppObj = NULL;
+        return E_NOINTERFACE;
+    }
+    reinterpret_cast<IUnknown*>(*ppObj)->AddRef();
+    return S_OK;
 }
 
 ULONG CCalculationFactory::AddRef()
 {
-	return InterlockedIncrement(&m_nRefCount);
+	return ::InterlockedIncrement(&m_nRefCount);
 }
 
 ULONG CCalculationFactory::Release()
 {
-	long nRefCount = 0;
-	nRefCount = InterlockedDecrement(&m_nRefCount);
-	if (nRefCount == 0)
-		delete this;
-	return nRefCount;
+    if (::InterlockedDecrement(&m_nRefCount) == 0) {
+        delete this;
+        return 0;
+    }
+    return m_nRefCount;
 }
 
-HRESULT CCalculationFactory::CreateInstance(IUnknown * pUnknownOuter, const IID & iid, void ** ppv)
+HRESULT CCalculationFactory::CreateInstance(IUnknown * pUnknownOuter, const IID & iid, LPVOID *ppv)
 {
+    HRESULT hr;
 	if (pUnknownOuter != nullptr) {
 		return CLASS_E_NOAGGREGATION;
 	}
@@ -52,7 +47,11 @@ HRESULT CCalculationFactory::CreateInstance(IUnknown * pUnknownOuter, const IID 
 	if (pObject == nullptr)
 		return E_OUTOFMEMORY;
 
-	return pObject->QueryInterface(iid, ppv);
+    hr = pObject->QueryInterface(iid, ppv);
+    if (FAILED(hr))
+        pObject->Release();
+
+	return hr;
 }
 
 HRESULT CCalculationFactory::LockServer(BOOL bLock)
