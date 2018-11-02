@@ -7,9 +7,9 @@ class CCalculationObj : public ICalculation
 {
 public:
 	//IUnknown interface
-	HRESULT __stdcall QueryInterface(REFIID riid, void **ppObj);
-	ULONG   __stdcall AddRef();
-	ULONG   __stdcall Release();
+	virtual HRESULT __stdcall QueryInterface(REFIID riid, LPVOID *ppObj);
+	virtual ULONG   __stdcall AddRef();
+	virtual ULONG   __stdcall Release();
 
 	//ICalculation interface
 	HRESULT __stdcall Addition(int op1, int op2, int *result);
