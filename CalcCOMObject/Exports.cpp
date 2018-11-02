@@ -3,8 +3,8 @@
 #include    "CalculationFactory.h"
 #include    "CalcObjGuid.h"
 
-HMODULE g_hModule=NULL;
-long g_nComObjsInUse=0;
+HMODULE g_hModule = NULL;
+long g_nComObjsInUse = 0;
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, void* lpReserved)
 {

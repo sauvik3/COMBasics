@@ -1,8 +1,7 @@
 #include "CalculationFactory.h"
 #include "CalculationObj.h"
 
-CCalculationFactory::CCalculationFactory() : m_nRefCount(1)
-{ }
+CCalculationFactory::CCalculationFactory() : m_nRefCount(1) {}
 
 CCalculationFactory::~CCalculationFactory()
 {
@@ -14,12 +13,12 @@ HRESULT CCalculationFactory::QueryInterface(REFIID riid, LPVOID *ppObj)
 	if ((riid == IID_IUnknown) || (riid == IID_IClassFactory)) {
 		*ppObj = static_cast<IClassFactory *>(this);
 	}
-    else {
-        *ppObj = NULL;
-        return E_NOINTERFACE;
-    }
-    reinterpret_cast<IUnknown*>(*ppObj)->AddRef();
-    return S_OK;
+	else {
+		*ppObj = NULL;
+		return E_NOINTERFACE;
+	}
+	reinterpret_cast<IUnknown*>(*ppObj)->AddRef();
+	return S_OK;
 }
 
 ULONG CCalculationFactory::AddRef()
@@ -29,16 +28,16 @@ ULONG CCalculationFactory::AddRef()
 
 ULONG CCalculationFactory::Release()
 {
-    if (::InterlockedDecrement(&m_nRefCount) == 0) {
-        delete this;
-        return 0;
-    }
-    return m_nRefCount;
+	if (::InterlockedDecrement(&m_nRefCount) == 0) {
+		delete this;
+		return 0;
+	}
+	return m_nRefCount;
 }
 
 HRESULT CCalculationFactory::CreateInstance(IUnknown * pUnknownOuter, const IID & iid, LPVOID *ppv)
 {
-    HRESULT hr;
+	HRESULT hr;
 	if (pUnknownOuter != nullptr) {
 		return CLASS_E_NOAGGREGATION;
 	}
@@ -47,9 +46,9 @@ HRESULT CCalculationFactory::CreateInstance(IUnknown * pUnknownOuter, const IID 
 	if (pObject == nullptr)
 		return E_OUTOFMEMORY;
 
-    hr = pObject->QueryInterface(iid, ppv);
-    if (FAILED(hr))
-        pObject->Release();
+	hr = pObject->QueryInterface(iid, ppv);
+	if (FAILED(hr))
+		pObject->Release();
 
 	return hr;
 }
