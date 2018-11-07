@@ -1,5 +1,4 @@
 #include    <objbase.h>
-#include    "CalculationObj.h"
 #include    "CalculationFactory.h"
 #include    "CalcObjGuid.h"
 

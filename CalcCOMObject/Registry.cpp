@@ -1,3 +1,4 @@
+#include <iostream>
 #include <objbase.h>
 #include "Registry.h"
 #include "CalcObjGuid.h"
@@ -6,19 +7,22 @@
 
 extern HMODULE g_hModule;
 
-BOOL HelperWriteKey(HKEY roothk, const char *lpSubKey, LPCTSTR val_name, DWORD dwType, void *lpvData, DWORD dwDataSize)
+LSTATUS HelperWriteKey(HKEY roothk, LPCSTR lpSubKey, LPCTSTR val_name, DWORD dwType, LPVOID lpvData, DWORD dwDataSize)
 {
 	HKEY hk;
-	if (ERROR_SUCCESS != RegCreateKey(roothk, lpSubKey, &hk))
-		return FALSE;
+	LSTATUS status;
 
-	if (ERROR_SUCCESS != RegSetValueEx(hk, val_name, 0, dwType, (CONST BYTE *)lpvData, dwDataSize))
-		return FALSE;
+	status = RegCreateKeyEx(roothk, lpSubKey, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, NULL, &hk, NULL);
+	if (status != ERROR_SUCCESS)
+		return status;
 
-	if (ERROR_SUCCESS != RegCloseKey(hk))
-		return FALSE;
+	status = RegSetValueEx(hk, val_name, 0, dwType, (CONST BYTE *)lpvData, dwDataSize);
+	if (status != ERROR_SUCCESS)
+		return status;
 
-	return TRUE;
+	status = RegCloseKey(hk);
+
+	return status;
 }
 
 HRESULT DllRegisterServer(HMODULE hModule, const CLSID & clsid, const char * szFriendlyName, const char * szVerIndProgID, const char * szProgID)
@@ -27,6 +31,7 @@ HRESULT DllRegisterServer(HMODULE hModule, const CLSID & clsid, const char * szF
 	char szBuff[MAX_PATH] = "";
 	char szClsid[MAX_PATH] = "", szInproc[MAX_PATH] = "", szProgId[MAX_PATH];
 	char szDescriptionVal[256] = "";
+	LSTATUS status;
 
 	StringFromCLSID(CLSID_CalcObject, &lpwszClsid);
 
@@ -38,15 +43,16 @@ HRESULT DllRegisterServer(HMODULE hModule, const CLSID & clsid, const char * szF
 	wsprintf(szBuff, "%s", "Calculation routines for basic arithmetic.");
 	wsprintf(szDescriptionVal, "%s\\%s", "clsid", szClsid);
 
-	HelperWriteKey(
+	status = HelperWriteKey(
 		HKEY_CLASSES_ROOT,
 		szDescriptionVal,
 		NULL,//write to the "default" value
 		REG_SZ,
-		(void*)szBuff,
+		(LPVOID)szBuff,
 		lstrlen(szBuff)
 	);
-
+	if (status != ERROR_SUCCESS)
+		return E_FAIL;
 
 	//
 	//write the "InprocServer32" key data
@@ -55,34 +61,38 @@ HRESULT DllRegisterServer(HMODULE hModule, const CLSID & clsid, const char * szF
 		g_hModule,
 		szBuff,
 		sizeof(szBuff));
-	HelperWriteKey(
+	status = HelperWriteKey(
 		HKEY_CLASSES_ROOT,
 		szInproc,
 		NULL,//write to the "default" value
 		REG_SZ,
-		(void*)szBuff,
+		(LPVOID)szBuff,
 		lstrlen(szBuff)
 	);
+	if (status != ERROR_SUCCESS)
+		return E_FAIL;
 
 	//
 	//write the "ProgId" key data under HKCR\clsid\{---}\ProgId
 	//
 	lstrcpy(szBuff, CalcObjProgId);
-	HelperWriteKey(
+	status = HelperWriteKey(
 		HKEY_CLASSES_ROOT,
 		szProgId,
 		NULL,
 		REG_SZ,
-		(void*)szBuff,
+		(LPVOID)szBuff,
 		lstrlen(szBuff)
 	);
+	if (status != ERROR_SUCCESS)
+		return E_FAIL;
 
 
 	//
 	//write the "ProgId" data under HKCR\CodeGuru.FastAddition
 	//
 	wsprintf(szBuff, "%s", "Calculation routines for basic arithmetic.");
-	HelperWriteKey(
+	status = HelperWriteKey(
 		HKEY_CLASSES_ROOT,
 		CalcObjProgId,
 		NULL,
@@ -90,10 +100,12 @@ HRESULT DllRegisterServer(HMODULE hModule, const CLSID & clsid, const char * szF
 		(void*)szBuff,
 		lstrlen(szBuff)
 	);
+	if (status != ERROR_SUCCESS)
+		return E_FAIL;
 
 
 	wsprintf(szProgId, "%s\\%s", CalcObjProgId, "CLSID");
-	HelperWriteKey(
+	status = HelperWriteKey(
 		HKEY_CLASSES_ROOT,
 		szProgId,
 		NULL,
@@ -101,6 +113,8 @@ HRESULT DllRegisterServer(HMODULE hModule, const CLSID & clsid, const char * szF
 		(void*)szClsid,
 		lstrlen(szClsid)
 	);
+	if (status != ERROR_SUCCESS)
+		return E_FAIL;
 
 	return S_OK;
 }
