@@ -2,7 +2,7 @@
 #include "CalculationObj.h"
 #include "Calculation_i.c"
 
-HRESULT CCalculationObj::QueryInterface(REFIID riid, LPVOID *ppObj) {
+STDMETHODIMP CCalculationObj::QueryInterface(REFIID riid, LPVOID *ppObj) {
 	if ((riid == IID_IUnknown) || (riid == IID_ICalculation)) {
 		*ppObj = static_cast<ICalculation *>(this);
 	}
@@ -15,12 +15,12 @@ HRESULT CCalculationObj::QueryInterface(REFIID riid, LPVOID *ppObj) {
 	return S_OK;
 }
 
-ULONG CCalculationObj::AddRef()
+STDMETHODIMP_(ULONG) CCalculationObj::AddRef()
 {
 	return ::InterlockedIncrement(&m_nRefCount);
 }
 
-ULONG CCalculationObj::Release()
+STDMETHODIMP_(ULONG) CCalculationObj::Release()
 {
 	if (::InterlockedDecrement(&m_nRefCount) == 0) {
 		delete this;
@@ -29,7 +29,7 @@ ULONG CCalculationObj::Release()
 	return m_nRefCount;
 }
 
-HRESULT CCalculationObj::Addition(int op1, int op2, int * result)
+STDMETHODIMP CCalculationObj::Addition(int op1, int op2, int * result)
 {
 	try
 	{
@@ -42,7 +42,7 @@ HRESULT CCalculationObj::Addition(int op1, int op2, int * result)
 	return S_OK;
 }
 
-HRESULT CCalculationObj::Subtraction(int op1, int op2, int * result)
+STDMETHODIMP CCalculationObj::Subtraction(int op1, int op2, int * result)
 {
 	try
 	{

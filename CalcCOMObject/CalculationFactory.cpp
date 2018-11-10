@@ -8,7 +8,7 @@ CCalculationFactory::~CCalculationFactory()
 	::InterlockedDecrement(&g_nComObjsInUse);
 }
 
-HRESULT CCalculationFactory::QueryInterface(REFIID riid, LPVOID *ppObj)
+STDMETHODIMP CCalculationFactory::QueryInterface(REFIID riid, LPVOID *ppObj)
 {
 	if ((riid == IID_IUnknown) || (riid == IID_IClassFactory)) {
 		*ppObj = static_cast<IClassFactory *>(this);
@@ -21,12 +21,12 @@ HRESULT CCalculationFactory::QueryInterface(REFIID riid, LPVOID *ppObj)
 	return S_OK;
 }
 
-ULONG CCalculationFactory::AddRef()
+STDMETHODIMP_(ULONG) CCalculationFactory::AddRef()
 {
 	return ::InterlockedIncrement(&m_nRefCount);
 }
 
-ULONG CCalculationFactory::Release()
+STDMETHODIMP_(ULONG) CCalculationFactory::Release()
 {
 	if (::InterlockedDecrement(&m_nRefCount) == 0) {
 		delete this;
@@ -35,7 +35,7 @@ ULONG CCalculationFactory::Release()
 	return m_nRefCount;
 }
 
-HRESULT CCalculationFactory::CreateInstance(IUnknown * pUnknownOuter, const IID & iid, LPVOID *ppv)
+STDMETHODIMP CCalculationFactory::CreateInstance(IUnknown * pUnknownOuter, const IID & iid, LPVOID *ppv)
 {
 	HRESULT hr;
 	if (pUnknownOuter != nullptr) {
@@ -53,7 +53,7 @@ HRESULT CCalculationFactory::CreateInstance(IUnknown * pUnknownOuter, const IID 
 	return hr;
 }
 
-HRESULT CCalculationFactory::LockServer(BOOL bLock)
+STDMETHODIMP CCalculationFactory::LockServer(BOOL bLock)
 {
 	return E_NOTIMPL;
 }

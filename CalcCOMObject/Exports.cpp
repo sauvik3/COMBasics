@@ -16,7 +16,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, void* lpReserved)
 STDAPI DllGetClassObject(const CLSID& clsid, const IID& iid, void** ppv)
 {
 	if (clsid == CLSID_CalcObject) {
-		CCalculationFactory *pCalcFact = new CCalculationFactory;
+		CCalculationFactory *pCalcFact = new CCalculationFactory();
 		if (pCalcFact == NULL)
 			return E_OUTOFMEMORY;
 		else
