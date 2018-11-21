@@ -28,5 +28,5 @@ STDAPI DllGetClassObject(const CLSID& clsid, const IID& iid, void** ppv)
 
 STDAPI DllCanUnloadNow()
 {
-	return (g_nComObjsInUse == 0);
+	return (g_nComObjsInUse == 0) ? TRUE : FALSE;
 }
