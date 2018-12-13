@@ -1,5 +1,6 @@
 #pragma once
 #include "Calculation_h.h"
+#include "CalcObjGuid.h"
 
 extern long g_nComObjsInUse;
 

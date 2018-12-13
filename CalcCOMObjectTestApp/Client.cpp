@@ -1,6 +1,6 @@
-#include <objbase.h>
+#include <comdef.h>
 #include <iostream>
-#import "CalcCOMObject.dll"
+#include "CalculationObj.h"
 
 int main()
 {
@@ -9,12 +9,16 @@ int main()
 
 	try
 	{
+		HRESULT hr;
+		ICalculation* pCalculationObj;
+
 		CoInitialize(NULL);
-		MyMathLib::ICalculationPtr pCalculationObj;
-		HRESULT hr = pCalculationObj.CreateInstance("MyCOMLibs.Calculation");
+		hr = CoCreateInstance(CLSID_CalcObject, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pCalculationObj));
 		_com_util::CheckError(hr);
+
 		pCalculationObj->Addition(n1, n2, &nOutPut);
 		std::cout << "Output after adding " << n1 << " and " << n2 << " is " << nOutPut << ".";
+		pCalculationObj->Release();
 	}
 	catch (const _com_error& e)
 	{

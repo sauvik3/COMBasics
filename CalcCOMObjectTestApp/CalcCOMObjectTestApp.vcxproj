@@ -74,25 +74,25 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(OutDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CalcCOMObject\;$(OutDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(OutDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CalcCOMObject\;$(OutDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(OutDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CalcCOMObject\;$(OutDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(OutDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CalcCOMObject\;$(OutDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
