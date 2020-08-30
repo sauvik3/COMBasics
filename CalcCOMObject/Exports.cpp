@@ -8,7 +8,7 @@ long g_nComObjsInUse = 0;
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, void* lpReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH) {
-		g_hModule = (HMODULE)hModule;
+		g_hModule = static_cast<HMODULE>(hModule);
 	}
 	return TRUE;
 }

@@ -6,7 +6,8 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void UnitTests::CCalculationObjTest::CCalculationObj_AdditionTest()
 {
-	int n1 = 100, n2 = 200;
+	const int n1 = 100;
+	const int n2 = 200;
 	int nOutPut = 0;
 	try
 	{
@@ -22,7 +23,8 @@ void UnitTests::CCalculationObjTest::CCalculationObj_AdditionTest()
 
 void UnitTests::CCalculationObjTest::CCalculationObj_SubtractionTest()
 {
-	int n1 = 500, n2 = 200;
+	const int n1 = 500;
+	const int n2 = 200;
 	int nOutPut = 0;
 	try
 	{

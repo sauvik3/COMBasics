@@ -9,7 +9,7 @@
 
 extern HMODULE g_hModule;
 
-STDAPI DllRegisterServer(void)
+STDAPI DllRegisterServer()
 {
 	LPOLESTR		lpwszClsid;
 	TCHAR			szBuff[MAX_PATH] = TEXT("");
@@ -26,7 +26,7 @@ STDAPI DllRegisterServer(void)
 	{
 		const size_t origLen = wcslen(lpwszClsid) + 1;
 		const size_t newsize = origLen * sizeof(CHAR);
-		WideCharToMultiByte(CP_UTF8, 0, lpwszClsid, (int)origLen, szClsid, (int)newsize, nullptr, nullptr);
+		WideCharToMultiByte(CP_UTF8, 0, lpwszClsid, static_cast<int>(origLen), szClsid, static_cast<int>(newsize), nullptr, nullptr);
 	}
 
 	StringCbPrintfA(szInproc, sz0, "%s\\%s\\%s", "clsid", szClsid, "InprocServer32");
@@ -41,7 +41,8 @@ STDAPI DllRegisterServer(void)
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
+		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, reinterpret_cast<CONST BYTE *>(szBuff)
+			, static_cast<DWORD>((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -60,7 +61,8 @@ STDAPI DllRegisterServer(void)
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
+		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, reinterpret_cast<CONST BYTE *>(szBuff)
+			, static_cast<DWORD>((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -79,7 +81,8 @@ STDAPI DllRegisterServer(void)
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
+		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, reinterpret_cast<CONST BYTE *>(szBuff)
+			, static_cast<DWORD>((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -98,7 +101,8 @@ STDAPI DllRegisterServer(void)
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
+		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, reinterpret_cast<CONST BYTE *>(szBuff)
+			, static_cast<DWORD>((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -107,7 +111,8 @@ STDAPI DllRegisterServer(void)
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueExA(hk1, nullptr, 0, REG_SZ, (CONST BYTE *)szClsid, (DWORD)((strlen(szClsid) + 1) * sizeof(CHAR)));
+		status = RegSetValueExA(hk1, nullptr, 0, REG_SZ, reinterpret_cast<CONST BYTE *>(szClsid)
+			, static_cast<DWORD>((strlen(szClsid) + 1) * sizeof(CHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -131,21 +136,20 @@ STDAPI DllUnregisterServer()
 	CHAR			szClsid[MAX_PATH] = "";
 	const size_t	sz0 = MAX_PATH * sizeof(CHAR);
 	const size_t	sz = MAX_PATH * sizeof(TCHAR);
-	LSTATUS			status;
 
 	::StringFromCLSID(CLSID_CalcObject, &lpwszClsid);
 	// Convert wchar_t * to CHAR *
 	{
 		const size_t origLen = wcslen(lpwszClsid) + 1;
 		const size_t newsize = origLen * sizeof(CHAR);
-		WideCharToMultiByte(CP_UTF8, 0, lpwszClsid, (int)origLen, szClsid, (int)newsize, nullptr, nullptr);
+		WideCharToMultiByte(CP_UTF8, 0, lpwszClsid, static_cast<int>(origLen), szClsid, static_cast<int>(newsize), nullptr, nullptr);
 	}
 
 	//
 	//delete the ProgId entry
 	//
 	StringCbPrintf(szKeyName, sz, TEXT("%s\\%s"), CalcObjProgId, TEXT("CLSID"));
-	status = RegDeleteKey(HKEY_CLASSES_ROOT, szKeyName);
+	LSTATUS status = RegDeleteKey(HKEY_CLASSES_ROOT, szKeyName);
 	if (status != ERROR_SUCCESS)
 		return HRESULT_FROM_WIN32(status);
 

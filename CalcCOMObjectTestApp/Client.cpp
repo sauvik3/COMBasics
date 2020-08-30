@@ -4,16 +4,16 @@
 
 int main()
 {
-	int n1 = 100, n2 = 200;
+	const int n1 = 100;
+	const int n2 = 200;
 	int nOutPut = 0;
 
 	try
 	{
-		HRESULT hr;
 		ICalculation* pCalculationObj;
 
 		CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
-		hr = CoCreateInstance(CLSID_CalcObject, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pCalculationObj));
+		const HRESULT hr = CoCreateInstance(CLSID_CalcObject, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pCalculationObj));
 		_com_util::CheckError(hr);
 
 		pCalculationObj->Addition(n1, n2, &nOutPut);

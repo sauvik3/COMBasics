@@ -2,6 +2,8 @@
 #include "CalculationObj.h"
 #include "Calculation_i.c"
 
+CCalculationObj::CCalculationObj() : m_nRefCount(0) {}
+
 STDMETHODIMP CCalculationObj::QueryInterface(REFIID riid, LPVOID *ppObj) {
 	if ((riid == IID_IUnknown) || (riid == IID_ICalculation)) {
 		*ppObj = static_cast<ICalculation *>(this);

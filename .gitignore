@@ -5,11 +5,9 @@
 /.vs
 /CalcCOMObject/Debug
 /CalcCOMObjectTestApp/Debug
-/TestRunner/Debug
 /UnitTests/Debug
 /CalcCOMObject/Release
 /CalcCOMObjectTestApp/Release
-/TestRunner/Release
 /UnitTests/Release
 /Debug
 /Release
@@ -18,5 +16,5 @@
 /CalcCOMObject/Calculation_i.c
 /CalcCOMObject.VC.db
 /CalcCOMObjectTestApp/CalcCOMObjectTestApp.vcxproj.user
-/TestRunner/TestRunner.vcxproj.user
 /UnitTests/UnitTests.vcxproj.user
+/CalcCOMObject.VC.VC.opendb
