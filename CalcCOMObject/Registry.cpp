@@ -26,7 +26,7 @@ STDAPI DllRegisterServer(void)
 	{
 		const size_t origLen = wcslen(lpwszClsid) + 1;
 		const size_t newsize = origLen * sizeof(CHAR);
-		WideCharToMultiByte(CP_UTF8, 0, lpwszClsid, (int)origLen, szClsid, (int)newsize, NULL, NULL);
+		WideCharToMultiByte(CP_UTF8, 0, lpwszClsid, (int)origLen, szClsid, (int)newsize, nullptr, nullptr);
 	}
 
 	StringCbPrintfA(szInproc, sz0, "%s\\%s\\%s", "clsid", szClsid, "InprocServer32");
@@ -37,11 +37,11 @@ STDAPI DllRegisterServer(void)
 	StringCbPrintfA(szDescriptionVal, sz0, "%s\\%s", "clsid", szClsid);
 	{
 		HKEY hk;
-		status = RegCreateKeyExA(HKEY_CLASSES_ROOT, szDescriptionVal, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, NULL, &hk, NULL);
+		status = RegCreateKeyExA(HKEY_CLASSES_ROOT, szDescriptionVal, 0, nullptr, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, nullptr, &hk, nullptr);
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueEx(hk, NULL, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
+		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -56,11 +56,11 @@ STDAPI DllRegisterServer(void)
 	GetModuleFileName(g_hModule, szBuff, MAX_PATH);
 	{
 		HKEY hk;
-		status = RegCreateKeyExA(HKEY_CLASSES_ROOT, szInproc, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, NULL, &hk, NULL);
+		status = RegCreateKeyExA(HKEY_CLASSES_ROOT, szInproc, 0, nullptr, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, nullptr, &hk, nullptr);
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueEx(hk, NULL, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
+		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -75,11 +75,11 @@ STDAPI DllRegisterServer(void)
 	StringCbPrintf(szBuff, sz, TEXT("%s"), CalcObjProgId);
 	{
 		HKEY hk;
-		status = RegCreateKeyExA(HKEY_CLASSES_ROOT, szProgId, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, NULL, &hk, NULL);
+		status = RegCreateKeyExA(HKEY_CLASSES_ROOT, szProgId, 0, nullptr, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, nullptr, &hk, nullptr);
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueEx(hk, NULL, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
+		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -94,20 +94,20 @@ STDAPI DllRegisterServer(void)
 	StringCbPrintf(szBuff, sz, TEXT("%s"), TEXT("Calculation routines for basic arithmetic."));
 	{
 		HKEY hk;
-		status = RegCreateKeyEx(HKEY_CLASSES_ROOT, CalcObjProgId, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, NULL, &hk, NULL);
+		status = RegCreateKeyEx(HKEY_CLASSES_ROOT, CalcObjProgId, 0, nullptr, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, nullptr, &hk, nullptr);
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueEx(hk, NULL, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
+		status = RegSetValueEx(hk, nullptr, 0, REG_SZ, (CONST BYTE *)szBuff, (DWORD)((_tcslen(szBuff) + 1) * sizeof(TCHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
 		HKEY hk1;
-		status = RegCreateKeyExA(hk, "CLSID", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, NULL, &hk1, NULL);
+		status = RegCreateKeyExA(hk, "CLSID", 0, nullptr, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_QUERY_VALUE, nullptr, &hk1, nullptr);
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
-		status = RegSetValueExA(hk1, NULL, 0, REG_SZ, (CONST BYTE *)szClsid, (DWORD)((strlen(szClsid) + 1) * sizeof(CHAR)));
+		status = RegSetValueExA(hk1, nullptr, 0, REG_SZ, (CONST BYTE *)szClsid, (DWORD)((strlen(szClsid) + 1) * sizeof(CHAR)));
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);
 
@@ -138,7 +138,7 @@ STDAPI DllUnregisterServer()
 	{
 		const size_t origLen = wcslen(lpwszClsid) + 1;
 		const size_t newsize = origLen * sizeof(CHAR);
-		WideCharToMultiByte(CP_UTF8, 0, lpwszClsid, (int)origLen, szClsid, (int)newsize, NULL, NULL);
+		WideCharToMultiByte(CP_UTF8, 0, lpwszClsid, (int)origLen, szClsid, (int)newsize, nullptr, nullptr);
 	}
 
 	//

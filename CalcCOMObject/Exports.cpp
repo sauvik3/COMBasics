@@ -2,7 +2,7 @@
 #include    "CalculationFactory.h"
 #include    "CalcObjGuid.h"
 
-HMODULE g_hModule = NULL;
+HMODULE g_hModule = nullptr;
 long g_nComObjsInUse = 0;
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, void* lpReserved)
@@ -17,7 +17,7 @@ STDAPI DllGetClassObject(const CLSID& clsid, const IID& iid, void** ppv)
 {
 	if (clsid == CLSID_CalcObject) {
 		CCalculationFactory *pCalcFact = new CCalculationFactory();
-		if (pCalcFact == NULL)
+		if (pCalcFact == nullptr)
 			return E_OUTOFMEMORY;
 		else
 			return pCalcFact->QueryInterface(iid, ppv);

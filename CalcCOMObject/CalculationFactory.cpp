@@ -14,7 +14,7 @@ STDMETHODIMP CCalculationFactory::QueryInterface(REFIID riid, LPVOID *ppObj)
 		*ppObj = static_cast<IClassFactory *>(this);
 	}
 	else {
-		*ppObj = NULL;
+		*ppObj = nullptr;
 		return E_NOINTERFACE;
 	}
 	reinterpret_cast<IUnknown*>(*ppObj)->AddRef();

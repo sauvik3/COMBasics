@@ -12,8 +12,8 @@ int main()
 		HRESULT hr;
 		ICalculation* pCalculationObj;
 
-		CoInitialize(NULL);
-		hr = CoCreateInstance(CLSID_CalcObject, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pCalculationObj));
+		CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+		hr = CoCreateInstance(CLSID_CalcObject, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pCalculationObj));
 		_com_util::CheckError(hr);
 
 		pCalculationObj->Addition(n1, n2, &nOutPut);

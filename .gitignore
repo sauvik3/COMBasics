@@ -2,4 +2,21 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/CalcCOMObject/v15
+/.vs
+/CalcCOMObject/Debug
+/CalcCOMObjectTestApp/Debug
+/TestRunner/Debug
+/UnitTests/Debug
+/CalcCOMObject/Release
+/CalcCOMObjectTestApp/Release
+/TestRunner/Release
+/UnitTests/Release
+/Debug
+/Release
+/TestResults
+/CalcCOMObject/Calculation_h.h
+/CalcCOMObject/Calculation_i.c
+/CalcCOMObject.VC.db
+/CalcCOMObjectTestApp/CalcCOMObjectTestApp.vcxproj.user
+/TestRunner/TestRunner.vcxproj.user
+/UnitTests/UnitTests.vcxproj.user

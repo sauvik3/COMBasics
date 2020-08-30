@@ -7,7 +7,7 @@ STDMETHODIMP CCalculationObj::QueryInterface(REFIID riid, LPVOID *ppObj) {
 		*ppObj = static_cast<ICalculation *>(this);
 	}
 	else {
-		*ppObj = NULL;
+		*ppObj = nullptr;
 		return E_NOINTERFACE;
 	}
 	reinterpret_cast<IUnknown*>(*ppObj)->AddRef();
