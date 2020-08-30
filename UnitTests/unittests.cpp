@@ -7,7 +7,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-void UnitTests::CCalculationObjTest::InitTests()
+void UnitTests::CCalculationObjTest::InitTest()
 {
 	Logger::WriteMessage("Initializing COM Library...");
 	try
@@ -26,7 +26,7 @@ void UnitTests::CCalculationObjTest::InitTests()
 	Assert::IsNotNull(pCalculationObj);
 }
 
-void UnitTests::CCalculationObjTest::CleanupTests()
+void UnitTests::CCalculationObjTest::CleanupTest()
 {
 	Logger::WriteMessage("Releasing COM Library...");
 	try
